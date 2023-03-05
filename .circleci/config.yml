@@ -6,7 +6,8 @@ orbs:
 
 jobs:
   build:
-    executor: python/default
+    docker:
+      - image: cimg/python:3.10.4
     steps:
       - checkout
       - python/install-packages:          
