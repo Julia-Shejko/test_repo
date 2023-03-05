@@ -16,13 +16,13 @@ jobs:
           command: pipenv sync --dev --system
       - run:
           name: Run linter
-          command: flake8 .
+          command: pipenv run flake8 .
       - run:
           name: Check formatting
-          command: black --check . && isort --check .
+          command: pipenv run black --check . && pipenv run isort --check .
       - run:
           name: Check static types
-          command: mypy .
+          command: pipenv run mypy .
      
 workflows:
   main:
