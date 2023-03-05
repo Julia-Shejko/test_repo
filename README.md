@@ -8,7 +8,6 @@
 cp .env.default .env
 ```
 
-
 ### Install deps
 ```bash
 pipenv sync --dev
