@@ -6,13 +6,10 @@ jobs:
       - image: circleci/python:3.10   
 
     steps:
-      - checkout
-      
+      - checkout      
       - run:
           name: Install deps
-          command: |
-            pip install pipenv
-            pipenv install --dev --system     
+          command: pip install pipenv && pipenv install --dev --system     
       - run:
           name: Check formatting
           command: pipenv run black --check . && pipenv run isort --check .      
@@ -22,8 +19,9 @@ jobs:
       - run:
           name: Check static types
           command: pipenv run mypy .
+
 workflows:
   version: 2
-  build:
+  main:
     jobs:
       - build
