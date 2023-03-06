@@ -3,9 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/python:3.10
-
-    working_directory: ~/repo
+      - image: circleci/python:3.10   
 
     steps:
       - checkout
