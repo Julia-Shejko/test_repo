@@ -1,30 +1,43 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
-orbs:
-  python: circleci/python@2.1.1
 
 jobs:
-  build:    
-    executor: python/default
+  build:
+    docker:
+      - image: circleci/python:3.10
+
+    working_directory: ~/repo
+
     steps:
       - checkout
-      - python/install-packages:          
-          pkg-manager: pipenv
+
+      # Install dependencies
       - run:
-          name: Install deps
-          command: pipenv sync --dev --system
+          name: Install Dependencies
+          command: |
+            pip install pipenv
+            pipenv install --dev --system
+      # Run black
       - run:
-          name: Run linter
-          command: pipenv run flake8 .
+          name: Run Black
+          command: |
+            pipenv run black --check .
+      # Run isort
       - run:
-          name: Check formatting
-          command: pipenv run black --check . && pipenv run isort --check .
+          name: Run isort
+          command: |
+            pipenv run isort --check .
+      # Run Flake8
       - run:
-          name: Check static types
-          command: pipenv run mypy .
-     
+          name: Run Flake8
+          command: |
+            pipenv run flake8 .
+      # Run mypy
+      - run:
+          name: Run Mypy
+          command: |
+            pipenv run mypy .
 workflows:
-  main:
+  version: 2
+  build:
     jobs:
       - build
