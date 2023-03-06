@@ -7,33 +7,21 @@ jobs:
 
     steps:
       - checkout
-
-      # Install dependencies
+      
       - run:
-          name: Install Dependencies
+          name: Install deps
           command: |
             pip install pipenv
-            pipenv install --dev --system
-      # Run black
+            pipenv install --dev --system     
       - run:
-          name: Run Black
-          command: |
-            pipenv run black --check .
-      # Run isort
+          name: Check formatting
+          command: pipenv run black --check . && pipenv run isort --check .      
       - run:
-          name: Run isort
-          command: |
-            pipenv run isort --check .
-      # Run Flake8
+          name: Run linter
+          command: pipenv run flake8 .       
       - run:
-          name: Run Flake8
-          command: |
-            pipenv run flake8 .
-      # Run mypy
-      - run:
-          name: Run Mypy
-          command: |
-            pipenv run mypy .
+          name: Check static types
+          command: pipenv run mypy .
 workflows:
   version: 2
   build:
